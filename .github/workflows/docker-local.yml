@@ -1,0 +1,22 @@
+name: Run Docker on Local Machine
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-job:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Docker Container
+        run: |
+          docker pull nginx
+          docker stop nginx-local || true
+          docker rm nginx-local || true
+          docker run -d --name nginx-local -p 8080:80 nginx
+
