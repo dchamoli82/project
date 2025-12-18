@@ -1,0 +1,18 @@
+name: Run Docker on Ubuntu Local Machine
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Docker Container
+        run: |
+          docker pull nginx
+          docker stop nginx-local || true
+          docker rm nginx-local || true
+          docker run -d --name nginx-local -p 8080:80 nginx
